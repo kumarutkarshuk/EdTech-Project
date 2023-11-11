@@ -19,7 +19,7 @@ const otpSchema = new mongoose.Schema({
 
 
 //function to send email
-
+//position of this code is critical
 async function sendVerificationEmail(email, otp){
     try{
         const mailResponse = await mailSender(email, 'Verify your email', otp);
@@ -30,9 +30,9 @@ async function sendVerificationEmail(email, otp){
     }
 }
 
-//next since it is a middleware
+//next since it is a middleware(pre to be specific)
 otpSchema.pre('save', async function(next){
-    await sendVerificationEmail(this.email, this.otp);
+    await sendVerificationEmail(this.email, this.otp); //use this keyword is intuitive
     next();
 })
 

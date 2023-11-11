@@ -1,0 +1,26 @@
+{
+    "server/config": {
+        "description": "1"
+    },
+    "server/controllers": {
+        "description": "2"
+    },
+    "server/models": {
+        "description": "3"
+    },
+    "server/routes": {
+        "description": "4"
+    },
+    "server/.env": {
+        "description": "5"
+    },
+    "server/index.js": {
+        "description": "6"
+    },
+    "server/middlewares": {
+        "description": "7"
+    },
+    "server/utils": {
+        "description": "8"
+    }
+}

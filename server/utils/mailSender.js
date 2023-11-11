@@ -5,7 +5,7 @@ require('dotenv').config()
 const mailSender = async (email, title, body) => {
     try{
 
-        //below transporter object is same as in the file upload project
+        //below transporter object is same as in the file upload project and is different from the one in class code
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth:{
@@ -15,16 +15,17 @@ const mailSender = async (email, title, body) => {
 
         })
 
+        //mail options included below
         let info = await transporter.sendMail({
 
-            from:'StudyNotion || CodeHelp - by Babbar',
+            from:'StudyNotion || by Utkarsh',
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`,
         })
 
         console.log(info);
-        return info
+        return info //have to look into this
 
 
 
