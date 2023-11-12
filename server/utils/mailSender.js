@@ -15,7 +15,7 @@ const mailSender = async (email, title, body) => {
 
         })
 
-        //mail options included below
+        //mail options directly included in the argument below
         let info = await transporter.sendMail({
 
             from:'StudyNotion || by Utkarsh',
