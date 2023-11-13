@@ -6,6 +6,7 @@ const Profile = require('../models/Profile')
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 require('dotenv').config()
+const mailSender = require('../utils/mailSender')
 
 //Error codes:
 //401-Unauthorized
@@ -128,7 +129,7 @@ exports.signUp = async (req, res)=>{
             })
         }
 
-        const hashedPassword = bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         const profileDetails = await Profile.create({
             gender: null, dateOfBirth: null, about: null, contactNumber: null
@@ -210,25 +211,39 @@ exports.login = async (req, res) => {
 
 //changePassword -> hw
 //doubt: bcrypt generates different outputs for same input -> cleared (no need to think of this)
-//doubt: can object returned by mongoose function be used to make changes in the db?
+//doubt: can object returned by mongoose function be used to make changes in the db? Ans -> no, it returns a copy
 exports.changePassword = async (req, res) => {
     try{
         //get data of oldPassword, newPassword, confirmNewPassword from req body
         const {oldPassword, newPassword, confirmNewPassword} = req.body
-        //validation -> I think old password should be validated as well
+        //validation -> I think old password should be validated as well -> done below
         if(newPassword !== confirmNewPassword){
             res.json({
                 success:false,
                 message:`Passwords don't match`
             })
         }
-        //
-        if(await bcrypt.compare(oldPassword, ))
-        //update in db -> how to find the user?
-        await User.findOneAndUpdate()
+        const id = req.user.id
+        const {password} = await User.findById({_id:id})
+        //update in db -> how to find the user? -> found
+        if(await bcrypt.compare(oldPassword, password)){
+            const hashedPassword = await bcrypt.hash(newPassword, 10)
+            await User.findOneAndUpdate({_id:id},{password: hashedPassword})
+        }
+        
         //send mail
-        //return response
-    }catch(e){
+        mailSender(req.user.email, 'Password Changed', 'Your password has been changed successfully')
 
+        //return response
+        res.status(200).json({
+            success:true,
+            message:"Password changed successfully"
+        })
+    }catch(e){
+        console.log(e)
+        res.status(500).json({
+            success:false,
+            message:"Error changing password",
+        })
     }
 }
