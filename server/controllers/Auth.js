@@ -209,7 +209,8 @@ exports.login = async (req, res) => {
 }
 
 //changePassword -> hw
-//doubt: bcrypt generates different outputs for same input
+//doubt: bcrypt generates different outputs for same input -> cleared (no need to think of this)
+//doubt: can object returned by mongoose function be used to make changes in the db?
 exports.changePassword = async (req, res) => {
     try{
         //get data of oldPassword, newPassword, confirmNewPassword from req body
@@ -221,6 +222,8 @@ exports.changePassword = async (req, res) => {
                 message:`Passwords don't match`
             })
         }
+        //
+        if(await bcrypt.compare(oldPassword, ))
         //update in db -> how to find the user?
         await User.findOneAndUpdate()
         //send mail
