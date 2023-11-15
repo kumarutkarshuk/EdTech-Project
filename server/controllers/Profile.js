@@ -68,7 +68,7 @@ exports.deleteAccount = async (req, res) =>{
         //hw: update students enrolled
         //below line will give undefined if empty
         let i = 0
-        while(userDetails.courses.length !== 0){
+        while(i < userDetails.courses.length){
             let courseId = userDetails.courses[i]
             await Course.findByIdAndUpdate(courseId, {$pull:{studentsEnrolled: id}})
             i++
