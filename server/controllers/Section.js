@@ -17,9 +17,17 @@ exports.createSection = async (req, res)=>{
         const updatedCourseDetails = await Course.findByIdAndUpdate(courseId,
             {
                 $push:{courseContent: newSection._id}
-            }, {new:true})
+            }, {new:true}).populate({
+                path: 'courseContent',
+                populate: {
+                    path: 'tasks',
+                    populate: {
+                        path: 'subSection',
+                    },
+                },
+            }).exec()
         
-        //hw: populate both section and sub section in updatedCourseDetails
+        //hw: populate both section and sub section in updatedCourseDetails -> better way might be there
 
         res.status(200).json({
             success:true,

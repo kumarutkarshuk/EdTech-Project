@@ -40,10 +40,73 @@ exports.createSubSection = async (req, res)=>{
             success:false,
             error:e.message,
             message:"Error creating the sub-section",
-            updatedSection
+            
 
         })
     }
 }
 
-//hw: update and delete
+//hw: update and delete -> done
+exports.updateSubSection = async (req, res)=>{
+    try{
+        const {sectionId, title, timeDuration, description, subSectionId} = req.body
+
+        //extract new video
+        const video = req.files.videoFile
+
+        //assuming everything is required while updating
+        if(!sectionId || !title || !timeDuration || !description || !video || !subSectionId){
+            res.status(400).json({
+                success:false,
+                message:"All fields are required"
+            })
+        }
+
+        //how to make this efficient?
+        const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME)
+
+        const subSectionDetails = await SubSection.findByIdAndUpdate(SubSectionId, {
+            title, timeDuration, description, videoUrl: uploadDetails.secure_url
+        }, {new: true})
+        
+        res.status(200).json({
+            success:true,
+            message:"Sub-Section updated successfully"
+        })
+
+    }catch(e){
+        res.status(500).json({
+            success:false,
+            error:e.message,
+            message:"Error updating the sub-section",
+
+        })
+    }
+}
+
+exports.deleteSubSection = async (req, res)=>{
+    try{
+
+
+        const {sectionId, subSectionId} = req.body
+
+        //I think validation isn't required
+
+        //It will be checked if sub section id has to be del from section or not
+        await SubSection.findOneAndDelete(subSectionId)
+
+        res.status(200).json({
+            success:true,
+            message:"Sub-Section deleted successfully"
+        })
+
+
+    }catch(e){
+        res.status(500).json({
+            success:false,
+            error:e.message,
+            message:"Error deleting the sub-section",
+
+        })
+    }
+}

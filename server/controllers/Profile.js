@@ -1,6 +1,7 @@
 const Profile = require('../models/Profile')
 //will user schema be required? -> yes, for fetching profile id
 const User = require('../models/User')
+const Course = require('../models/Course')
 
 exports.updateProfile = async (req, res)=>{
     try{
@@ -65,6 +66,13 @@ exports.deleteAccount = async (req, res) =>{
         await Profile.findByIdAndDelete(userDetails.additionalDetails)
 
         //hw: update students enrolled
+        //below line will give undefined if empty
+        let i = 0
+        while(userDetails.courses.length !== 0){
+            let courseId = userDetails.courses[i]
+            await Course.findByIdAndUpdate(courseId, {$pull:{studentsEnrolled: id}})
+            i++
+        }
 
         await User.findByIdAndDelete(id)
 
