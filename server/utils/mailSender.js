@@ -25,7 +25,7 @@ const mailSender = async (email, title, body) => {
         })
 
         console.log(info);
-        return info //have to look into this
+        return info //have to look into this -> this might be returning to Payment.js controller
 
 
 
