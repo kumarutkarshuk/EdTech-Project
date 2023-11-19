@@ -231,9 +231,17 @@ exports.changePassword = async (req, res) => {
             await User.findOneAndUpdate({_id:id},{password: hashedPassword})
         }
         
-        //send mail
-        mailSender(req.user.email, 'Password Changed', 'Your password has been changed successfully')
-
+        //send mail -> try catch block
+        try{
+            mailSender(req.user.email, 'Password Changed', 'Your password has been changed successfully')
+        }catch(e){
+            console.log(e)
+            res.status(500).json({
+            success:false,
+            message:"Error sending mail",
+        })
+        }
+        
         //return response
         res.status(200).json({
             success:true,

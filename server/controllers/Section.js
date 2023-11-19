@@ -28,6 +28,7 @@ exports.createSection = async (req, res)=>{
             }).exec()
         
         //hw: populate both section and sub section in updatedCourseDetails -> better way might be there
+        
 
         res.status(200).json({
             success:true,

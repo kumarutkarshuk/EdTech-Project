@@ -46,7 +46,7 @@ exports.createSubSection = async (req, res)=>{
     }
 }
 
-//hw: update and delete -> done
+//hw: update and delete -> done -> sol is not there
 exports.updateSubSection = async (req, res)=>{
     try{
         const {sectionId, title, timeDuration, description, subSectionId} = req.body

@@ -65,7 +65,7 @@ exports.deleteAccount = async (req, res) =>{
 
         await Profile.findByIdAndDelete(userDetails.additionalDetails)
 
-        //hw: update students enrolled
+        //hw: update students enrolled -> done -> sol not there
         //below line will give undefined if empty
         let i = 0
         while(i < userDetails.courses.length){

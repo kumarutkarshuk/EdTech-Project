@@ -1,16 +1,16 @@
 const Course = require('../models/Course')
-const Tag = require('../models/Tag')
+const Category = require('../models/Category')
 const User = require('../models/User')
 const {uploadImageToCloudinary} = require('../utils/imageUploader')
 require('dotenv').config()
 
 exports.createCourse = async (req, res)=>{
     try{
-        const {courseName, courseDescription, whatYouWillLearn, price, tag} = req.body
+        const {courseName, courseDescription, whatYouWillLearn, price, category} = req.body
         const thumbnail = req.files.thumbnailImage
 
         
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category){
             res.status(400).json({
                 success:false,
                 message:"All fields are mandatory"
@@ -29,12 +29,12 @@ exports.createCourse = async (req, res)=>{
         }
         //check whether userId and instructorDetails._id are the same or not in the next classes
 
-        //validating tag because of postman since dropdown will always give valid tag
-        const tagDetails = await Tag.findById(tag)
-        if(!tagDetails){
+        //validating category because of postman since dropdown will always give valid category
+        const categoryDetails = await Category.findById(category)
+        if(!categoryDetails){
             res.status(404).json({
                 success:false,
-                message:'Tag Not Found'
+                message:'Category Not Found'
             })
         }
 
@@ -46,7 +46,7 @@ exports.createCourse = async (req, res)=>{
             instructor: instructorDetails._id,
             whatYouWillLearn,
             price,
-            tag: tagDetails._id,
+            category: categoryDetails._id,
             thumbnail: thumbnailImage.secure_Url
         })
 
@@ -55,8 +55,8 @@ exports.createCourse = async (req, res)=>{
         },{new:true})
 
 
-        //HW -> update tag schema -> done
-        await Tag.findByIdAndUpdate({tag}, {$push: {course:tag}}, {new:true})
+        //HW -> update category schema -> done
+        await Category.findByIdAndUpdate(category, {$push: {course:newCourse._id}}, {new:true})
 
         res.status(200).json({
             success:true,
