@@ -12,7 +12,7 @@ const mailSender = require('../utils/mailSender')
 //401-Unauthorized
 //200: OK
 //500: internal server error
-//403: forbidden 
+//403: forbidden -> not allowed
 //400:bad request
 
 

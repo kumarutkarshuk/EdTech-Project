@@ -93,3 +93,58 @@ exports.showAllCourses = async (req, res)=>{
         })
     }
 }
+
+exports.getCourseDetails = async (req, res)=>{
+    try{
+
+        const {courseId} = req.body
+
+        //way to use .find()
+        //.populate() is used multiple times
+        //stackoverflow -> dive more in populating -> to do that repeat the code like done below
+        const courseDetails = await Course.find({_id: courseId})
+                                            .populate({
+                                                path:"instructor",
+                                                populate:{
+                                                    path:"additionalDetails"                                                 
+                                                    
+                                                }
+                                            })
+                                            .populate({
+                                                path:"instructor",
+                                                populate:{
+                                                    path:"courses"                                                 
+                                                    
+                                                }
+                                            })
+                                            .populate("category")
+                                            .populate("ratingAndReviews")
+                                            .populate({
+                                                path:"courseContent",
+                                                populate:{
+                                                    path:"subSection"
+                                                }
+                                            })
+                                            .exec()
+                                            
+        if(!courseDetails){
+            res.status(400).json({
+                success:false,
+                message:`Couldn't find the course with course id: ${courseId}`
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"Course details fetched successfully",
+            data: courseDetails
+        })
+
+    }catch(e){
+        console.log(e)
+        res.status(500).json({
+            success:false,
+            message:"Error getting course details"
+        })
+    }
+}

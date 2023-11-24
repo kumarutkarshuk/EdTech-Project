@@ -22,5 +22,8 @@
     },
     "server/utils": {
         "description": "8"
+    },
+    "server/controllers/Auth.js": {
+        "description": "status codes"
     }
 }

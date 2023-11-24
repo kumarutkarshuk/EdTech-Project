@@ -41,9 +41,13 @@ const courseSchema = new mongoose.Schema({
     price:{
         type:Number
     },
-    tags:[{
+    tags:[{ //this is different from class code
         type:String
-    }]
+    }],
+    status: {
+        type:String,
+        enum:["Draft", "Published"]
+    }
 
 })
 

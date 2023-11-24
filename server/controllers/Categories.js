@@ -45,3 +45,44 @@ exports.showAllCategories = async (req, res) =>{
         })
     }
 }
+
+exports.categoryPageDetails = async (req, res) => {
+    try{
+
+        const {categoryId} = req.body
+
+        const selectedCategory = await Category.findById(categoryId).populate("courses").exec()
+
+        if(!selectedCategory){
+            res.status(404).json({
+                success:false,
+                message:"Courses with selected category not found"
+            })
+        }
+
+        //get categories whose id is not of the selected category
+        //ne -> not equal
+        const differentCategories = await Category.find({
+            _id: {$ne: categoryId}
+        }).populate("courses").exec()
+
+
+        //hw -> get top 10 selling courses -> I think number of times a course is sold is efficient
+        //I'll use the longer way for now
+
+
+
+        res.status(200).json({
+            success:true,
+            data:{selectedCategory, differentCategories}
+        })
+
+
+
+    }catch(e){
+        res.status(500).json({
+            success:false,
+            message: "Error fetching category page details"
+        })
+    }
+}

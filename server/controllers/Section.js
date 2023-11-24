@@ -20,10 +20,7 @@ exports.createSection = async (req, res)=>{
             }, {new:true}).populate({
                 path: 'courseContent',
                 populate: {
-                    path: 'tasks',
-                    populate: {
-                        path: 'subSection',
-                    },
+                    path: 'subSection'
                 },
             }).exec()
         
