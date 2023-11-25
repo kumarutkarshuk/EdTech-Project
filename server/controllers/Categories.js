@@ -67,8 +67,12 @@ exports.categoryPageDetails = async (req, res) => {
         }).populate("courses").exec()
 
 
-        //hw -> get top 10 selling courses -> I think number of times a course is sold is efficient
+        //hw -> get top 10 selling courses -> I think if number of times a course is sold is known,
+        //it will be an efficient approach -> doubt
         //I'll use the longer way for now
+        // const allCategories = await Category.find().populate("courses").exec()
+
+
 
 
 
