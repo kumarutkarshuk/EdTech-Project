@@ -2,6 +2,8 @@ const Profile = require('../models/Profile')
 //will user schema be required? -> yes, for fetching profile id
 const User = require('../models/User')
 const Course = require('../models/Course')
+const {uploadImageToCloudinary} = require('../utils/imageUploader')
+require('dotenv').config()
 
 exports.updateProfile = async (req, res)=>{
     try{
@@ -113,6 +115,66 @@ exports.getAllUserDetails = async (req, res)=>{
             message:"Error fetching the user details",
             
 
+        })
+    }
+}
+
+exports.updateDisplayPicture = async (req, res) => {
+    try{
+
+        //I think we insert in the object below
+        const displayPicture = req.files.displayPicture
+        
+        const userId = req.user.id
+
+        //what is this?
+        const image = await uploadImageToCloudinary(displayPicture, process.env.FOLDER_NAME, 1000, 1000)
+
+        //printing what? -> will get to know while testing -> Is is related to the return in imageUploader?
+        console.log(image)
+
+        const updatedProfile = User.findByIdAndUpdate(userId, {image: image.secure_url}, {new:true})
+
+        //res.send is there in class code
+        //Is more validation required? eg: Is updatedProfile null?
+        res.status(200).json({
+            success:true,
+            message:"Display picture updated successfully"
+        })
+
+    }catch(e){
+        res.status(500).json({
+            success:false,
+            error:e.message,
+            message:"Error updating display picture",
+        })
+    }
+}
+
+exports.getEnrolledCourses = async (req, res) => {
+    try{
+
+
+        const userId = req.user.id
+        const userDetails = await User.findById(userId).populate('courses').exec()
+        if(!userDetails){
+            res.status(400).json({
+                success:false,
+                message: 'user not found'
+            })
+        }
+        res.status(200).json({
+            success:true,
+            //Check how we just return the courses
+            data: userDetails.courses
+        })
+
+
+    }catch(e){
+        res.status(500).json({
+            success:false,
+            error:e.message,
+            message:"Error fetching enrolled courses",
         })
     }
 }

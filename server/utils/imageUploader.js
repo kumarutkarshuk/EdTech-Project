@@ -14,6 +14,7 @@ exports.uploadImageToCloudinary = async (file, folder, height, quality)=>{
         }
         options.resource_type = 'auto'
 
+        //Have to check this while testing
         return await cloudinary.uploader.upload(file.tempFilePath, options)
 
 
