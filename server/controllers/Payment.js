@@ -12,7 +12,7 @@ exports.capturePayment = async (req, res) => {
 
         //not needed I think
         if(!course_id){
-            res.json({
+            return res.json({
                 success:false,
                 message: "Please provide valid course ID"
             })
@@ -24,7 +24,7 @@ exports.capturePayment = async (req, res) => {
         try{
             course = await Course.findById(course_id)
             if(!course){
-                res.json({
+                return res.json({
                     success:false,
                     message: "Course not found"
                 })
@@ -34,14 +34,14 @@ exports.capturePayment = async (req, res) => {
             //understand by the name
             if(course.studentsEnrolled.includes(uid)){
                 //200?
-                res.status(200).json({
+                return res.status(200).json({
                     success:false,
                     message:"Student is already enrolled in the course"
                 })
             }
 
         }catch(e){
-            res.status(500).json({
+            return res.status(500).json({
                 success:false,
                 message:"Error interacting with the DB",
     
@@ -69,7 +69,7 @@ exports.capturePayment = async (req, res) => {
             console.log("Payment Response",paymentResponse)
 
             //we'll come to know why we sent this later
-            res.status(200).json({
+            return res.status(200).json({
                 success:true,
                 //can't write simply course.courseName
                 courseName: course.courseName,
@@ -81,7 +81,7 @@ exports.capturePayment = async (req, res) => {
 
             })
         }catch(e){
-            res.status(500).json({
+            return res.status(500).json({
                 success:false,
                 message:"Error initiating the payment",
     
@@ -115,8 +115,8 @@ exports.verifySignature = async (req, res) => {
                 {$push: {studentsEnrolled: userId}}, {new: true})
             
             //validation not needed I think
-            id(!enrolledCourse){
-                res.status(500).json({
+            if(!enrolledCourse){
+                return res.status(500).json({
                     success:false,
                     message:"Error in finding and updating the course"
                 })
@@ -134,14 +134,14 @@ exports.verifySignature = async (req, res) => {
             )
 
             console.log("Email response:", emailResponse)
-            res.status(200).json({
+            return res.status(200).json({
                 success:true,
                 message:'Signature verified and course added'
             })
 
 
         }catch(e){
-            res.status(500).json({
+            return res.status(500).json({
                 success:false,
                 message:"Error updating the details",
     
@@ -149,7 +149,7 @@ exports.verifySignature = async (req, res) => {
         }
     }else{
 
-        res.status(400).json({
+        return res.status(400).json({
             success:true,
             message:"Signature not verified"
         })

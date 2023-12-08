@@ -14,7 +14,7 @@ exports.updateProfile = async (req, res)=>{
 
         //no need of validating id ig
         if(!contactNumber || !gender || !id){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"All fields are mandatory"
             })
@@ -33,14 +33,14 @@ exports.updateProfile = async (req, res)=>{
         await profileDetails.save()
 
         //confidential info should be hidden generally
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Profile updated successfully",
             profileDetails
         })
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error updating the profile",
@@ -59,7 +59,7 @@ exports.deleteAccount = async (req, res) =>{
 
         //validation not required ig
         if(!userDetails){
-            res.status(404).json({
+            return res.status(404).json({
                 success:false,
                 message:"User not found"
             })
@@ -78,7 +78,7 @@ exports.deleteAccount = async (req, res) =>{
 
         await User.findByIdAndDelete(id)
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"User deleted successfully"
         })
@@ -86,7 +86,7 @@ exports.deleteAccount = async (req, res) =>{
 
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error deleting the account",
@@ -102,14 +102,14 @@ exports.getAllUserDetails = async (req, res)=>{
         //validation is not required ig because user is already authorised
         const userDetails = await User.findById(id).populate("additionalDetails").exec()
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"User details fetched successfully",
             userDetails
         })
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error fetching the user details",
@@ -133,17 +133,18 @@ exports.updateDisplayPicture = async (req, res) => {
         //printing what? -> will get to know while testing -> Is is related to the return in imageUploader?
         console.log(image)
 
-        const updatedProfile = User.findByIdAndUpdate(userId, {image: image.secure_url}, {new:true})
+        const updatedProfile = await User.findByIdAndUpdate(userId, {image: image.secure_url}, {new:true})
 
         //res.send is there in class code
         //Is more validation required? eg: Is updatedProfile null?
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
-            message:"Display picture updated successfully"
+            message:"Display picture updated successfully",
+            data: updatedProfile
         })
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error updating display picture",
@@ -158,12 +159,12 @@ exports.getEnrolledCourses = async (req, res) => {
         const userId = req.user.id
         const userDetails = await User.findById(userId).populate('courses').exec()
         if(!userDetails){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message: 'user not found'
             })
         }
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             //Check how we just return the courses
             data: userDetails.courses
@@ -171,7 +172,7 @@ exports.getEnrolledCourses = async (req, res) => {
 
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error fetching enrolled courses",

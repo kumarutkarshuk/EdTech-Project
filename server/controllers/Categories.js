@@ -6,7 +6,7 @@ exports.createCategory = async (req, res) => {
         
         //I think we'll set them null initially in the frontend
         if(!name || !description){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"All fields are required"
             })
@@ -14,7 +14,7 @@ exports.createCategory = async (req, res) => {
 
         const categoryDetails = await Category.create({name, description})
         console.log("Category Details:", categoryDetails)
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Category created successfully"
         })
@@ -22,7 +22,7 @@ exports.createCategory = async (req, res) => {
 
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message: e.message
         })
@@ -32,14 +32,14 @@ exports.createCategory = async (req, res) => {
 exports.showAllCategories = async (req, res) =>{
     try{
         //name and description should be present in all tags
-        const allTags = Tag.find({}, {name:true, description:true})
-        res.status(200).json({
+        const allCategories = await Category.find({}, {name:true, description:true})
+        return res.status(200).json({
             success:true,
             message:"All categories fetched successfully",
-            allTags
+            allCategories
         })
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message: e.message
         })
@@ -54,7 +54,7 @@ exports.categoryPageDetails = async (req, res) => {
         const selectedCategory = await Category.findById(categoryId).populate("courses").exec()
 
         if(!selectedCategory){
-            res.status(404).json({
+            return res.status(404).json({
                 success:false,
                 message:"Courses with selected category not found"
             })
@@ -76,7 +76,7 @@ exports.categoryPageDetails = async (req, res) => {
 
 
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             data:{selectedCategory, differentCategories}
         })
@@ -84,7 +84,7 @@ exports.categoryPageDetails = async (req, res) => {
 
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message: "Error fetching category page details"
         })

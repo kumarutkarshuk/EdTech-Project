@@ -7,7 +7,7 @@ const mailSender = async (email, title, body) => {
 
         //below transporter object is same as in the file upload project and is different from the one in class code
         let transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: "gmail",
             auth:{
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS

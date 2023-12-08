@@ -11,7 +11,7 @@ exports.createRating = async (req, res) => {
         //another method discussed in class
         const courseDetails = await Course.findById(courseId)
         if(!courseDetails.studentsEnrolled.includes(userId)){
-            res.status(404).json({
+            return res.status(404).json({
                 success:false,
                 message:"Student is not enrolled in the course"
             })
@@ -20,7 +20,7 @@ exports.createRating = async (req, res) => {
         const alreadyReviewed = await RatingAndReview.findOne({user:userId, course:courseId})
 
         if(alreadyReviewed){
-            res.status(403).json({
+            return res.status(403).json({
                 success:false,
                 message:"Student has already reviewed"
             })
@@ -32,7 +32,7 @@ exports.createRating = async (req, res) => {
 
         console.log("Updated course details",updatedCourseDetails)
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Rating and review created successfully",
             ratingReview
@@ -41,7 +41,7 @@ exports.createRating = async (req, res) => {
 
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error creating rating & review"
         })
@@ -69,13 +69,13 @@ exports.getAverageRating = async (req, res) => {
         //aggregate function returns array
         //reutrn the average rating like this
         if(result.length > 0){
-            res.status(200).json({
+            return res.status(200).json({
                 success:true,
                 averageRating: result[0].averageRating
             })
         }else{
             //what if all rating are given 0?
-            res.status(200).json({
+            return res.status(200).json({
                 success:true,
                 message:"No rating found",
                 averageRating: 0
@@ -85,7 +85,7 @@ exports.getAverageRating = async (req, res) => {
 
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error fetching average rating"
         })
@@ -103,7 +103,7 @@ exports.getAllRatingAndReviews = async (req, res) => {
             path:"course", select:"courseName"
         }).exec()
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"All ratings and reviews fetched successfully",
             data: allData
@@ -111,7 +111,7 @@ exports.getAllRatingAndReviews = async (req, res) => {
 
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error fetching all ratings and reviews"
         })

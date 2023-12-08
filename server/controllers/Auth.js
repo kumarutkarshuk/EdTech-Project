@@ -88,14 +88,14 @@ exports.signUp = async (req, res)=>{
 
         if(!firstName || !lastName || !email || !password || !confirmPassword || !otp){
            
-            res.status(403).json({
+            return res.status(403).json({
                 success:false,
                 message:"All fields are required"
             })
         }
         
         if(password !== confirmPassword){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"Passwords do not match. Please try again"
             })
@@ -104,26 +104,26 @@ exports.signUp = async (req, res)=>{
         const existingUser = await User.findOne({email})
         if(existingUser){
             
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"User already exists"
             })
         }
 
         //finding most recent otp is again confusing (written in sendOtp controller)
-        //.sort() -> For sorting the document in descending order on the basis of createdAt
-        //.limit() -> For displaying the limited number of document present in the collection
-        const recentOtp = await User.find({email}).sort({createdAt:-1}).limit(1)
+        //.sort() -> For sorting the documents in descending order on the basis of createdAt
+        //.limit() -> For displaying the limited number of documents present in the collection
+        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1)
         console.log("Recent OTP:", recentOtp)
         if(recentOtp.length === 0){
             
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"OTP not found"
             })
-        }else if(otp !== recentOtp.otp){
+        }else if(otp != recentOtp[0].otp){ //first item from array of documents
             
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"OTP doesn't match"
             })
@@ -151,7 +151,7 @@ exports.signUp = async (req, res)=>{
     }catch(e){
         console.log(e)
 
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"User can't be registered",
         })
@@ -164,7 +164,7 @@ exports.login = async (req, res) => {
 
         if(!email || !password){
 
-            res.status(403).json({
+            return res.status(403).json({
                 success: false,
                 message: "Enter all the details"
             })
@@ -172,7 +172,7 @@ exports.login = async (req, res) => {
         //no need of populate below
         const user = await User.findOne({email})
         if(!user){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"User isn't registered. Please signup first"
             })
@@ -188,21 +188,21 @@ exports.login = async (req, res) => {
 
             const options = {expires: new Date(Date.now() + 3*24*60*60*1000), httpOnly: true}
             //An HttpOnly Cookie is a tag added to a browser cookie that prevents client-side scripts from accessing data
-            res.cookie('token', token, options).status(200).json({
+            return res.cookie('token', token, options).status(200).json({
                 success:true,
                 token,
                 user,
                 message: "Logged in successfully"
             })
         }else{
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"Password is incorrect"
             })
         }
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error logging in",
         })
@@ -218,7 +218,7 @@ exports.changePassword = async (req, res) => {
         const {oldPassword, newPassword, confirmNewPassword} = req.body
         //validation -> I think old password should be validated as well -> done below
         if(newPassword !== confirmNewPassword){
-            res.json({
+            return res.json({
                 success:false,
                 message:`Passwords don't match`
             })
@@ -236,20 +236,20 @@ exports.changePassword = async (req, res) => {
             mailSender(req.user.email, 'Password Changed', 'Your password has been changed successfully')
         }catch(e){
             console.log(e)
-            res.status(500).json({
+            return res.status(500).json({
             success:false,
             message:"Error sending mail",
         })
         }
         
         //return response
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Password changed successfully"
         })
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error changing password",
         })

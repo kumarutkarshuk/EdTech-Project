@@ -11,7 +11,7 @@ exports.createCourse = async (req, res)=>{
 
         
         if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"All fields are mandatory"
             })
@@ -22,7 +22,7 @@ exports.createCourse = async (req, res)=>{
         console.log("Instructor Details:", instructorDetails)
         //if not present, null will be returned (I think)
         if(!instructorDetails){
-            res.status(404).json({
+            return res.status(404).json({
                 success:false,
                 message:'Instructor Not Found'
             })
@@ -32,7 +32,7 @@ exports.createCourse = async (req, res)=>{
         //validating category because of postman since dropdown will always give valid category
         const categoryDetails = await Category.findById(category)
         if(!categoryDetails){
-            res.status(404).json({
+            return res.status(404).json({
                 success:false,
                 message:'Category Not Found'
             })
@@ -58,7 +58,7 @@ exports.createCourse = async (req, res)=>{
         //HW -> update category schema -> done
         await Category.findByIdAndUpdate(category, {$push: {course:newCourse._id}}, {new:true})
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Course created successfully",
             data:newCourse
@@ -67,7 +67,7 @@ exports.createCourse = async (req, res)=>{
         
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Failed to create course",
             error:e.message
@@ -80,14 +80,14 @@ exports.showAllCourses = async (req, res)=>{
         //will look into the below statement in the future
         const allCourses = await Course.find({}).populate('instructor').exec()
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Courses fetched successfully",
             data:allCourses 
         })
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error fetching courses"
         })
@@ -128,13 +128,13 @@ exports.getCourseDetails = async (req, res)=>{
                                             .exec()
                                             
         if(!courseDetails){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:`Couldn't find the course with course id: ${courseId}`
             })
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Course details fetched successfully",
             data: courseDetails
@@ -142,7 +142,7 @@ exports.getCourseDetails = async (req, res)=>{
 
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"Error getting course details"
         })

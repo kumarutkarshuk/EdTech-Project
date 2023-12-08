@@ -6,7 +6,7 @@ exports.createSection = async (req, res)=>{
         //I think courseId shouldn't be there -> should be there to update the course schema
         const {sectionName, courseId} = req.body
         if(!sectionName || !courseId){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:'All fields are required'
             })
@@ -27,13 +27,13 @@ exports.createSection = async (req, res)=>{
         //hw: populate both section and sub section in updatedCourseDetails -> better way might be there
         
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:'Section created successfully',
             updatedCourseDetails 
         })
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:'Error in creating section'
         })
@@ -48,7 +48,7 @@ exports.updateSection = async (req, res)=>{
         const{sectionName, sectionId} = req.body
 
         if(!sectionName){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:'All fields are required'
             })
@@ -56,7 +56,7 @@ exports.updateSection = async (req, res)=>{
 
         const section = await Section.findByIdAndUpdate(sectionId, {sectionName}, {new:true})
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Section updated successfully"
         })
@@ -65,7 +65,7 @@ exports.updateSection = async (req, res)=>{
 
 
     }catch(e){
-        res.status(500).json({
+        return es.status(500).json({
             success:false,
             error:e.message,
             message:"Error updating the section"
@@ -77,22 +77,24 @@ exports.updateSection = async (req, res)=>{
 exports.deleteSection = async (req, res) => {
     try{
 
-        //assuming we're receiving id as a parameter from route
-        const {sectionId} = req.params
+        //assuming we're receiving id as a parameter from route -> changes to body for testing
+        const {sectionId, courseId} = req.body
 
+        //deleting section id from course
+        await Course.findByIdAndUpdate(courseId, {$pull: {courseContent: sectionId}}, {new:true})
 
         //not validating
         await Section.findByIdAndDelete(sectionId)
         
         //do we need to delete the id from the course schema -> will check while testing
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:"Section deleted successfully"
         })
 
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error deleting the section"

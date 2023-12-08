@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const mailSender = require('../utils/mailSender')
 const bcrypt = require('bcrypt')
-
+const crypto = require('crypto')
 //resetPasswordToken
 exports.resetPasswordToken = async (req, res)=>{
     try{
@@ -14,7 +14,7 @@ exports.resetPasswordToken = async (req, res)=>{
                 message:"User isn't registered with us"
             })
         }
-        const token = crypto.randomUUID;
+        const token = crypto.randomBytes(20).toString('hex')
 
 
         
@@ -27,12 +27,12 @@ exports.resetPasswordToken = async (req, res)=>{
         const url = `http://localhost:3000/update-password/${token}`
         mailSender(email, 'Reset Password Link', `Click on the link to change your password: ${url}`)
 
-        res.json({
+        return res.json({
             success:true,
             message:'Email sent successfully. Please check your email to change password.'
         })
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:'Something went wrong while sending email for resetting password'
         })
@@ -46,40 +46,42 @@ exports.resetPassword = async (req, res) => {
         const {password, confirmPassword, token} = req.body
 
         if(password !== confirmPassword){
-            res.json({
+            return res.json({
                 success:false,
                 message:"Passwords don't match"
             })
         }
 
         const userDetails = await User.findOne({token})
+        
         if(!userDetails){
-            res.json({
+            return res.json({
                 success:false,
                 message:"No user found with this token"
             })
         }
 
         if(userDetails.resetPasswordExpires < Date.now()){
-            res.json({
+            return res.json({
                 success:false,
                 message:'Token has expired. Please regenerate the password reset link '
             })
         }
 
-        const hashedPassword = bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
+
         await User.findOneAndUpdate({token}, {password: hashedPassword}, {new:true})
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:'Password reset successful'
         })
         
     }catch(e){
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
-            message:'Something went wrong while resetting password'
+            message:'Something went wrong while resetting password',
         })
     }
 }

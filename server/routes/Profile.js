@@ -6,7 +6,7 @@ const{updateProfile, deleteAccount, getAllUserDetails, updateDisplayPicture, get
 = require('../controllers/Profile')
 
 router.put('/updateProfile', auth, updateProfile)
-router.delete('./deleteProfile', auth, deleteAccount)
+router.delete('/deleteProfile', auth, deleteAccount)
 router.get('/getUserDetails', auth, getAllUserDetails)
 
 router.put('/updateDisplayPicture', auth, updateDisplayPicture)
