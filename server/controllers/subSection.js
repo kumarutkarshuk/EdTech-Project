@@ -65,7 +65,7 @@ exports.updateSubSection = async (req, res)=>{
         //how to make this efficient?
         const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME)
 
-        const subSectionDetails = await SubSection.findByIdAndUpdate(SubSectionId, {
+        const subSectionDetails = await SubSection.findByIdAndUpdate(subSectionId, {
             title, timeDuration, description, videoUrl: uploadDetails.secure_url
         }, {new: true})
         
@@ -91,6 +91,10 @@ exports.deleteSubSection = async (req, res)=>{
         const {sectionId, subSectionId} = req.body
 
         //I think validation isn't required
+
+        //update section also
+        await Section.findByIdAndUpdate(sectionId, {$pull: {subSection: subSectionId}}, {new: true})
+
 
         //It will be checked if sub section id has to be del from section or not
         await SubSection.findOneAndDelete(subSectionId)

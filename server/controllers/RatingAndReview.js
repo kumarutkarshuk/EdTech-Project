@@ -1,5 +1,6 @@
 const RatingAndReview = require('../models/RatingAndReviews')
 const Course = require('../models/Course')
+const mongoose = require('mongoose')
 
 exports.createRating = async (req, res) => {
     try{
@@ -67,7 +68,7 @@ exports.getAverageRating = async (req, res) => {
         ])
 
         //aggregate function returns array
-        //reutrn the average rating like this
+        //return the average rating like this
         if(result.length > 0){
             return res.status(200).json({
                 success:true,
@@ -87,7 +88,8 @@ exports.getAverageRating = async (req, res) => {
         console.log(e)
         return res.status(500).json({
             success:false,
-            message:"Error fetching average rating"
+            message:"Error fetching average rating",
+            error: e.message
         })
     }
 }
@@ -103,6 +105,13 @@ exports.getAllRatingAndReviews = async (req, res) => {
             path:"course", select:"courseName"
         }).exec()
 
+        if(allData.length === 0){
+            return res.status(200).json({
+                success:true,
+                message:"No rating or review found",
+                
+            })
+        }
         return res.status(200).json({
             success:true,
             message:"All ratings and reviews fetched successfully",

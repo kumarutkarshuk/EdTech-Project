@@ -9,7 +9,7 @@ exports.auth = async(req, res, next) => {
         const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "")
 
         if(!token){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"Token is missing"
             })
@@ -20,7 +20,7 @@ exports.auth = async(req, res, next) => {
             req.user = decode
 
          }catch(e){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"Token in invalid"
             })
@@ -28,7 +28,7 @@ exports.auth = async(req, res, next) => {
          next()
         
     }catch(e){
-        res.status(401).json({
+        return res.status(401).json({
             success:false,
             message:"Something went wrong while validating the token"
         })
@@ -41,13 +41,13 @@ exports.auth = async(req, res, next) => {
 exports.isStudent = async (req, res, next)=>{
     try{
         if(req.user.accountType !== 'Student'){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"This is a protected route for students only"
             })
         }
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"User role can't be verified"
         })
@@ -59,13 +59,13 @@ exports.isStudent = async (req, res, next)=>{
 exports.isInstructor = async (req, res, next)=>{
     try{
         if(req.user.accountType !== 'Instructor'){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"This is a protected route for instructors only"
             })
         }
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"User role can't be verified"
         })
@@ -76,13 +76,13 @@ exports.isInstructor = async (req, res, next)=>{
 exports.isAdmin = async (req, res, next)=>{
     try{
         if(req.user.accountType !== 'Admin'){
-            res.status(401).json({
+            return res.status(401).json({
                 success:false,
                 message:"This is a protected route for admins only"
             })
         }
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success:false,
             message:"User role can't be verified"
         })

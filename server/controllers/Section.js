@@ -1,5 +1,6 @@
 const Section = require('../models/Section')
 const Course = require('../models/Course')
+const subSection = require('../models/SubSection')
 
 exports.createSection = async (req, res)=>{
     try{
@@ -77,11 +78,18 @@ exports.updateSection = async (req, res)=>{
 exports.deleteSection = async (req, res) => {
     try{
 
-        //assuming we're receiving id as a parameter from route -> changes to body for testing
-        const {sectionId, courseId} = req.body
+        //assuming we're receiving id as a parameter from route
+        const {sectionId, courseId} = req.params
+
+        //above details fetched from body for testing
+        // const {sectionId, courseId} = req.body
 
         //deleting section id from course
         await Course.findByIdAndUpdate(courseId, {$pull: {courseContent: sectionId}}, {new:true})
+
+        //delete sub sections also
+        const sectionDetails = await Section.findById(sectionId)
+        sectionDetails.subSection.forEach(async (id) => await subSection.findByIdAndDelete(id))
 
         //not validating
         await Section.findByIdAndDelete(sectionId)
