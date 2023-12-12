@@ -2,9 +2,10 @@ import React from 'react'
 
 const HighlightText = ({text}) => {
   return (
-    // gradient hw
-    <span className='font-bold text-richblue-200'>
-  
+    
+    <span className='font-bold text-[#12D8FA]'>
+    {/* unable to add gradient */}
+    
     
         {" "}{text}
     </span>

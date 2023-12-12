@@ -44,12 +44,12 @@ const CodeBlocks = ({position, heading, subheading, ctabtn1, ctabtn2, codeblock,
             <div className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}>
                     <TypeAnimation
                     sequence={[codeblock, 2000, ""]} repeat={Infinity} cursor={true} omitDeletionAnimation={true} style={{
-                        whiteSpace: 'pre-line', display: 'block'
+                        whiteSpace: 'pre-line'
                     }}
                     ></TypeAnimation>
             </div>
         </div>
-                
+        {/* pending */}
                 
         
     </div>
