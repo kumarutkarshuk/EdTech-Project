@@ -31,22 +31,20 @@ const TimelineSection = () => {
   ]
 
   return (
-    <div className='flex justify-evenly items-center lg:flex-row flex-col mt-6'>
-      <div className='flex flex-col gap-14'>
+    <div className='flex justify-evenly items-center lg:flex-row flex-col mt-6 gap-2'>
+      <div className='flex flex-col lg:gap-14 gap-10'>
         {
           data.map((element, index) => (
             <div className='flex gap-4'>
-              <div className='rounded-full bg-white w-[50px] h-[50px] flex justify-center items-center'>
+              <div className='rounded-full bg-white w-[50px] h-[50px] flex justify-center items-center relative'>
                 <img src={element.logo}/>
               </div>
-             
+              
               <div className='flex flex-col'>
                 <h1 className='font-bold'>{element.heading}</h1>
                 <p>{element.content}</p>
               </div>
-              <div>
-
-              </div>
+              
             </div>
           ))
         }

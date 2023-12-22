@@ -1,23 +1,47 @@
+//to path in link tag -> button and forgot password
+//some more logic might be left
+
+
 import React from 'react'
 import image from '../assets/Images/login.webp'
 import { useState } from 'react'
 import frame from '../assets/Images/frame.png'
-import CTAButton from '../components/core/HomePage/CTAButton'
+import { Link } from 'react-router-dom'
+import { IoEye } from "react-icons/io5";
+import { IoMdEyeOff } from "react-icons/io";
+import toast from 'react-hot-toast'
 
 const Login = () => {
 
     const tabNames = [
         'Student',
         'Instructor'
-        
     ]
 
     const [currentTab, setCurrentTab] = useState(tabNames[0])
+    const [showPassword, setShowPassword] = useState(false)
+    const [formData, setFormData] = useState({email:"", password:"", accountType:"Student"})
+
+    const showPasswordHandler = () => {
+        setShowPassword(!showPassword)
+        
+    }
+
+    const formDataHandler = (e) => {
+        setFormData({...formData, [e.target.id]:e.target.value})
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        // console.log(formData)
+    }
+
+    
 
   return (
     <div className='w-11/12 mx-auto flex text-white justify-evenly mt-[5%] gap-14'>
 
-        <div className='flex flex-col gap-4 w-[30%]'>
+        <div className='flex flex-col gap-4 w-[40%]'>
             <h1 className='text-4xl font-semibold'>Welcome Back</h1>
             <p>Build skills for today, tomorrow, and beyond. <span className='text-blue-100 italic'>Education to future-proof your career.</span></p>
 
@@ -31,11 +55,35 @@ const Login = () => {
             ))}
             </div>
 
-            <div>
-                {/* pending */}
-            </div>
+            <form className='flex flex-col gap-4' onSubmit={submitHandler}>
+                <div className='flex flex-col gap-2'>
+                    <label htmlFor="email">Email Address<sup className='text-pink-300'>*</sup></label>
+                    <input type="email" placeholder='Enter email address' className='bg-richblack-800 p-4 rounded-md border-b-[1px] border-[#FFFFFF2E]
+                    focus:outline-none' id='email' onChange={formDataHandler} required/>
+                </div>
+                
+                <div className='flex flex-col gap-2'>
+                    <label htmlFor="password">Password<sup className='text-pink-300'>*</sup></label>
+                    <input type={showPassword ? 'text' : 'password'} placeholder='Enter password' className='bg-richblack-800 p-4 rounded-md border-b-[1px] 
+                    border-[#FFFFFF2E] focus:outline-none' id='password' onChange={formDataHandler} required/>
+                    <Link className='text-blue-100 text-right text-sm'>Forgot Password</Link>
 
-            <CTAButton active={true}>Sign in</CTAButton>
+                    
+
+                    <div className='absolute translate-x-[530px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
+                    onClick={showPasswordHandler}>
+                        {
+                            showPassword ?  <IoMdEyeOff /> : <IoEye />
+                        }
+                    </div> 
+
+                </div>
+                <button className='text-center text-[13px] px-6 py-3 rounded-md font-bold bg-yellow-50 text-black
+                border-[#FFFFFF2E] border-b-2 border-r-2 hover:scale-95'>Sign In</button>
+            </form>
+
+             
+            
 
 
         </div>

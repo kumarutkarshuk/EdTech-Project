@@ -69,7 +69,7 @@ const Footer = () => {
                             <h2 className='font-bold text-richblack-100'>{element.title}</h2>
                             <div className='flex flex-col gap-2'>
                                 {element.links.map((element2, index2)=>{
-                                    return <Link to={element2.link} key={index} className='hover:underline'>{element2.title}</Link>
+                                    return <Link to={element2.link} key={index} className='hover:text-richblack-50 transition-all duration-200'>{element2.title}</Link>
                                 })}
                             </div>
                     </div>

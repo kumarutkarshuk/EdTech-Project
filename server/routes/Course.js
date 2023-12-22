@@ -24,7 +24,7 @@ router.post('/editCourse', auth, isInstructor, editCourse)
 router.delete('/deleteCourse', auth, isInstructor, deleteCourse)
 
 router.post('/createCategory', auth, isAdmin, createCategory)
-router.get('/showAllCategories', auth, isAdmin, showAllCategories)
+router.get('/showAllCategories', showAllCategories) //auth and isAdmin middlewares removed
 router.post('/getCategoryPageDetails', auth, isAdmin, categoryPageDetails)
 
 router.post('/createRating', auth, isStudent, createRating)

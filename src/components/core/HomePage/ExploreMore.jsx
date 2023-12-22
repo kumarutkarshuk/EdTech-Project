@@ -29,7 +29,7 @@ const ExploreMore = () => {
   return (
     <div className='w-11/12 mx-auto flex flex-col items-center gap-2 relative mb-[15%]'>
         
-        <div className='text-4xl font-semibold flex gap-2 lg:flex-row flex-col items-center'>
+        <div className='text-4xl font-semibold flex gap-2 lg:flex-row flex-col items-center mt-4'>
             <p>Unlock the</p>
             <HighlightText text={'Power of Code'}></HighlightText>
         </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaArrowRight } from "react-icons/fa";
 import HighlightText from '../components/core/HomePage/HighlightText'
 import CTAButton from '../components/core/HomePage/CTAButton' //call-to-action button
-//importing video to be used in src attribute
+//importing video to be used in src attribute -> can't be done the normal way
 import banner from '../assets/Images/banner.mp4'
 import CodeBlocks from '../components/core/HomePage/CodeBlocks'
 import TimelineSection from '../components/core/HomePage/TimelineSection'
@@ -20,11 +20,12 @@ const Home = () => {
     <div>
         {/* section 1 */}
         <div className='relative mx-auto flex flex-col w-11/12 items-center text-white justify-between max-w-maxContent z-0'>
-            {/* navbar is left which might be in common*/}
+            
 
-            <Link to='/signup'>
+            <Link to='/signup' className='mt-16'>
            
-                <div className='group mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit mt-16 p-1 border-b-[1px] border-[#FFFFFF2E]'>
+                <div className='group mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit 
+                p-1 border-b-[1px] border-[#FFFFFF2E] '>
                     <div className='flex items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900'>
                         <p>Become an Instructor</p>
                         <FaArrowRight />
@@ -49,10 +50,13 @@ const Home = () => {
             </div>
 
             
-            <div className='lg:shadow-[-15px_-10px_100px_rgba(8,_112,_184,_0.7)] shadow-[-5px_-5px_100px_rgba(8,_112,_184,_0.7)] mx-3 my-12 w-[85%] relative'>
+            <div className=' mx-3 my-12 w-[85%]'>
 
-                <div className='z-10 shadow-[15px_15px_0px_0px_white] hidden lg:block'><video src={banner} muted loop autoPlay></video></div>
+                <div className='z-10 shadow-[15px_15px_0px_0px_white] hidden lg:block'>
+                    <video src={banner} muted loop autoPlay></video>
+                </div>
                 <img src={image} className='lg:hidden'/>
+                
                 
             </div>
 
@@ -60,14 +64,15 @@ const Home = () => {
 
             
             <div>
-                <CodeBlocks position='lg:flex-row'
+                <CodeBlocks 
+                position='lg:flex-row'
                 heading={<div className='text-4xl font-semibold'>Unlock your <HighlightText text={'coding potential'}></HighlightText> with our online courses.
                 </div>}
                 subheading={'Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you.'}
                 ctabtn1={{btnText: 'Try it Yourself', linkto:'/signup', active:true}}
                 ctabtn2={{btnText: 'Learn More', linkto:'/login', active:false}}
-                
-                
+                codeColor={'text-yellow-25'}
+                backgroundGradient='codeblock1'
                 >
                 </CodeBlocks>
             </div>
@@ -79,6 +84,8 @@ const Home = () => {
                 subheading={`Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson.`}
                 ctabtn1={{btnText: 'Continue Lesson', linkto:'/signup', active:true}}
                 ctabtn2={{btnText: 'Learn More', linkto:'/login', active:false}}
+                codeColor={'text-white'}
+                backgroundGradient='codeblock2'
                 >
                 </CodeBlocks>
             </div>
