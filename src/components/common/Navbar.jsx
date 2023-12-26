@@ -63,7 +63,8 @@ const Navbar = () => {
                                                         subLinks.length!==0 ? subLinks.map((element, index) => (
                                                             
                                                             <li key={index} className='hover:bg-richblack-100 p-2 
-                                                            rounded-md w-full flex justify-center'><Link to={'/'+ element.name.toLowerCase()}>{element.name}</Link></li>
+                                                            rounded-md w-full flex justify-center'><Link to={'/'+ element.name.toLowerCase()}>{element.name}
+                                                            </Link></li>
 
                                                         )
  
@@ -86,7 +87,7 @@ const Navbar = () => {
             </div>
 
             {/* login/signup/dashboard */}
-            <div className='flex gap-2'>
+            <div className='flex gap-4'>
                 {
                     user && user?.accountType !== "Instructor" && (
                         <Link to='/dashboard/cart' className='relative text-white flex items-center'>
@@ -120,7 +121,7 @@ const Navbar = () => {
                     )
                 }
                 {
-                    token!=null && <ProfileDropDown></ProfileDropDown>
+                    token!==null && <ProfileDropDown></ProfileDropDown>
                 }
             </div>
 

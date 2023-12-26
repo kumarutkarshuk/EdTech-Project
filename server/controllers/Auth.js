@@ -1,3 +1,6 @@
+//unforced errors are taken care of in signup controller where another field -> technicalMessage is returned as a response
+
+
 const User = require('../models/User')
 const Otp = require('../models/Otp')
 const otpGenerator = require('otp-generator')
@@ -13,7 +16,7 @@ const mailSender = require('../utils/mailSender')
 //200: OK
 //500: internal server error
 //403: forbidden -> not allowed
-//400:bad request
+//400: bad request
 
 
 //sendOtp
@@ -26,8 +29,8 @@ exports.sendOtp = async (req, res)=>{
         
         //js treats null as false
         if(checkUserPresent){
-            //return not required
-            res.status(401).json({
+            //return not required -> required to prevent errors
+            return res.status(401).json({
                 success: false,
                 message: "User already exists"
             })
@@ -119,7 +122,8 @@ exports.signUp = async (req, res)=>{
             
             return res.status(400).json({
                 success:false,
-                message:"OTP not found"
+                message:"Please regenerate OTP",
+                technicalMessage:"OTP not found"
             })
         }else if(otp != recentOtp[0].otp){ //first item from array of documents
             
@@ -132,7 +136,7 @@ exports.signUp = async (req, res)=>{
         const hashedPassword = await bcrypt.hash(password, 10)
 
         const profileDetails = await Profile.create({
-            gender: null, dateOfBirth: null, about: null, contactNumber: null
+            gender: null, dateOfBirth: null, about: null, contactNumber: contactNumber
         })
 
         const user = await User.create({
@@ -160,7 +164,7 @@ exports.signUp = async (req, res)=>{
 //login
 exports.login = async (req, res) => {
     try{
-        const {email, password} = req.body
+        const {email, password, accountType} = req.body
 
         if(!email || !password){
 
@@ -175,6 +179,13 @@ exports.login = async (req, res) => {
             return res.status(401).json({
                 success:false,
                 message:"User isn't registered. Please signup first"
+            })
+        }
+
+        if(user.accountType !== accountType){
+            return res.status(401).json({
+                success:false,
+                message:`User isn't ${accountType}`
             })
         }
 

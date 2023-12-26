@@ -13,7 +13,7 @@ const fileUpload = require('express-fileupload')
 
 
 
-const PORT = process.env.PORT || 4000 //in case if it's null, don't know how
+const PORT = process.env.PORT || 4000 //in case if it's null, don't know how -> also in .env also 4000 is there
 
 app.use(express.json())
 //some more middlewares

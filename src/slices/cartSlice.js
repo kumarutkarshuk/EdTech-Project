@@ -1,3 +1,5 @@
+//some logic left
+
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast"; //it shouldn't be here ig
 
@@ -13,12 +15,17 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: initialState,
     reducers:{
-        setTotalItems(state, value){
+        setTotalItems: (state, value) => {
             state.totalItems += value //I'm assuming value will come to be added directly
-        }
+        },
+
+        resetCart: (state) => {
+            state.totalItems=0
+        } 
+
     }
 })
 
-export const {setTotalItems} = cartSlice.actions
+export const {setTotalItems, resetCart} = cartSlice.actions
 export default cartSlice.reducer
 

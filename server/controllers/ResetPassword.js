@@ -1,3 +1,6 @@
+//status codes are necessary for the frontend
+
+
 const User = require('../models/User')
 const mailSender = require('../utils/mailSender')
 const bcrypt = require('bcrypt')
@@ -9,7 +12,7 @@ exports.resetPasswordToken = async (req, res)=>{
 
         const user = await User.findOne({email})
         if(!user){
-            res.json({
+            return res.status(401).json({
                 success:false,
                 message:"User isn't registered with us"
             })
@@ -46,7 +49,7 @@ exports.resetPassword = async (req, res) => {
         const {password, confirmPassword, token} = req.body
 
         if(password !== confirmPassword){
-            return res.json({
+            return res.status(400).json({
                 success:false,
                 message:"Passwords don't match"
             })
@@ -61,10 +64,11 @@ exports.resetPassword = async (req, res) => {
             })
         }
 
+        //milliseconds are being compared
         if(userDetails.resetPasswordExpires < Date.now()){
-            return res.json({
+            return res.status(403).json({
                 success:false,
-                message:'Token has expired. Please regenerate the password reset link '
+                message:'Token has expired. Please go back to login and retry'
             })
         }
 

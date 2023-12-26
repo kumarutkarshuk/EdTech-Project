@@ -1,15 +1,17 @@
-//to path in link tag -> button and forgot password
+//to path in link tag -> button 
 //some more logic might be left
-
+//compatibility of input field with chrome browser
+//credits to freepik
 
 import React from 'react'
 import image from '../assets/Images/login.webp'
 import { useState } from 'react'
 import frame from '../assets/Images/frame.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
-import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { login } from '../services/operations/authAPI'
 
 const Login = () => {
 
@@ -21,6 +23,8 @@ const Login = () => {
     const [currentTab, setCurrentTab] = useState(tabNames[0])
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({email:"", password:"", accountType:"Student"})
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const showPasswordHandler = () => {
         setShowPassword(!showPassword)
@@ -33,7 +37,11 @@ const Login = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        formData.accountType=currentTab
+        login(dispatch, navigate, formData)
+
         // console.log(formData)
+
     }
 
     
@@ -66,7 +74,7 @@ const Login = () => {
                     <label htmlFor="password">Password<sup className='text-pink-300'>*</sup></label>
                     <input type={showPassword ? 'text' : 'password'} placeholder='Enter password' className='bg-richblack-800 p-4 rounded-md border-b-[1px] 
                     border-[#FFFFFF2E] focus:outline-none' id='password' onChange={formDataHandler} required/>
-                    <Link className='text-blue-100 text-right text-sm'>Forgot Password</Link>
+                    <Link className='text-blue-100 text-right text-sm' to='/forgot-password'>Forgot Password</Link>
 
                     
 
@@ -88,9 +96,9 @@ const Login = () => {
 
         </div>
 
-        <div>
-           <img src={image} className='relative z-10'/>
-           <img src={frame} className='absolute -z-0 -translate-y-[96%] translate-x-6'/>
+        <div className='relative z-0 w-[40%] h-[400px]'>
+           <img src={image} className='z-10'/>
+           <img src={frame} className='absolute -z-10 top-[3%] left-[3%]'/>
         </div>
 
         
