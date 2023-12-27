@@ -1,7 +1,7 @@
 //some logic left
 
 import { createSlice } from "@reduxjs/toolkit";
-import toast from "react-hot-toast"; //it shouldn't be here ig
+//toast shouldn't be here ig
 
 const initialState = {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import HighlightText from './HighlightText'
+import HighlightText from '../../common/HighlightText'
 import {HomePageExplore} from '../../../data/homepage-explore'
 import { useState } from 'react'
 import { PiStudent } from "react-icons/pi";
@@ -38,7 +38,9 @@ const ExploreMore = () => {
 
         <div className='lg:flex bg-richblack-800 rounded-full px-2 lg:visible hidden'>
             {tabNames.map((element, index) => (
-                <div key={index} className={`${currentTabIndex===index ? 'bg-richblack-900' : 'bg-richblack-800'} rounded-full m-2 py-2 px-4 text-richblack-100 hover:bg-richblack-900 hover:cursor-pointer transition-all duration-200`} onClick={() => setCurrent(index)}
+                <div key={index} className={`${currentTabIndex===index ? 'bg-richblack-900' : 
+                'bg-richblack-800'} rounded-full m-2 py-2 px-4 text-richblack-100 hover:bg-richblack-900 
+                hover:cursor-pointer transition-all duration-200`} onClick={() => setCurrent(index)}
                 >
                     {element}
                 </div>
@@ -51,7 +53,8 @@ const ExploreMore = () => {
                     //way to add shadow
 
                     
-                  <div key={index} className={`flex flex-col  gap-16 p-8 justify-between ${currentCardIndex===index ? 'bg-white text-black shadow-[10px_10px_0px_0px_rgba(255,240,0)]': 
+                  <div key={index} className={`flex flex-col  gap-16 p-8 justify-between ${currentCardIndex===index ? 
+                  'bg-white text-black shadow-[10px_10px_0px_0px_rgba(255,240,0)]': 
                   'bg-richblack-800'} relative`}
                   onClick={()=>setCurrentCardIndex(index)}>
                   <div className='flex flex-col gap-2'>

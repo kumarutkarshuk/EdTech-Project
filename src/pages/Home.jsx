@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaArrowRight } from "react-icons/fa";
-import HighlightText from '../components/core/HomePage/HighlightText'
-import CTAButton from '../components/core/HomePage/CTAButton' //call-to-action button
+import HighlightText from '../components/common/HighlightText'
+import CTAButton from '../components/common/CTAButton' //call-to-action button
 //importing video to be used in src attribute -> can't be done the normal way
 import banner from '../assets/Images/banner.mp4'
 import CodeBlocks from '../components/core/HomePage/CodeBlocks'
 import TimelineSection from '../components/core/HomePage/TimelineSection'
-import LearningALanguage from '../components/core/HomePage/LearningALanguage'
+import LearningALanguage from '../components/core/HomePage/LearningALanguage' 
 import Footer from '../components/common/Footer'
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
@@ -40,7 +40,8 @@ const Home = () => {
             </div>
 
             <div className='w-[90%] text-center text-lg font-bold text-richblack-300 mt-4'>
-            With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors. 
+            With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to
+             a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors. 
             </div>
 
             <div className='flex gap-7 mt-8' >
@@ -50,12 +51,12 @@ const Home = () => {
             </div>
 
             
-            <div className=' mx-3 my-12 w-[85%]'>
+            <div className=' mx-3 my-12 w-[85%] shadow-[0_20px_500px_rgba(8,_112,_184,_0.4)]'>
 
                 <div className='z-10 shadow-[15px_15px_0px_0px_white] hidden lg:block'>
                     <video src={banner} muted loop autoPlay></video>
                 </div>
-                <img src={image} className='lg:hidden'/>
+                <img src={image} className='lg:hidden '/>
                 
                 
             </div>
@@ -147,12 +148,9 @@ const Home = () => {
 
         {/* section 3 */}
         <InstructorSection/>
-        <div className='lg:text-4xl text-2xl font-semibold text-white w-11/12 lg:text-center p-10 mx-auto'>
-            Reviews from other learners
-        </div>
 
         {/* slider */}
-
+        
 
 
         {/* footer*/}

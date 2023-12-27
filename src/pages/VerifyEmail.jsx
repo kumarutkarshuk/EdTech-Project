@@ -9,7 +9,7 @@ import OtpInput from 'react-otp-input';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { sendOtp, signup } from '../services/operations/authAPI';
-import { useSelector , useDispatch} from 'react-redux';
+import { useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 

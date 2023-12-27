@@ -1,11 +1,11 @@
 import React from 'react'
-import CTAButton from './CTAButton'
-import HighlightText from './HighlightText'
+import CTAButton from '../../common/CTAButton'
 import { FaArrowRight } from "react-icons/fa";
 import { TypeAnimation } from 'react-type-animation';
 
 const CodeBlocks = ({position, heading, subheading, ctabtn1, ctabtn2, backgroundGradient, codeColor}) => {
-    const text = `<!DOCTYPE html>\n<html>\n<head><title>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n</head>\n<body>\n<h1><ahref="/">Header</a>\n</h1>\n<nav><ahref="one/">One</a><ahref="two/">Two</\na><ahref="three/">Three</a>\n</nav>`
+    const text = `<!DOCTYPE html>\n<html>\n<head><title>Example</\ntitle><linkrel="stylesheet"href="styles.css">
+    \n</head>\n<body>\n<h1><ahref="/">Header</a>\n</h1>\n<nav><ahref="one/">One</a><ahref="two/">Two</\na><ahref="three/">Three</a>\n</nav>`
   return (
     <div className={`flex ${position} lg:my-20 justify-between lg:gap-10 lg:flex-row flex-col`}>
 

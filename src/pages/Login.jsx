@@ -70,7 +70,7 @@ const Login = () => {
                     focus:outline-none' id='email' onChange={formDataHandler} required/>
                 </div>
                 
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 relative'>
                     <label htmlFor="password">Password<sup className='text-pink-300'>*</sup></label>
                     <input type={showPassword ? 'text' : 'password'} placeholder='Enter password' className='bg-richblack-800 p-4 rounded-md border-b-[1px] 
                     border-[#FFFFFF2E] focus:outline-none' id='password' onChange={formDataHandler} required/>
@@ -78,7 +78,7 @@ const Login = () => {
 
                     
 
-                    <div className='absolute translate-x-[530px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
+                    <div className='absolute left-[94%] top-[45%] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
                     onClick={showPasswordHandler}>
                         {
                             showPassword ?  <IoMdEyeOff /> : <IoEye />

@@ -24,7 +24,7 @@ const ProfileDropDown = () => {
   //not needed ig
 
   return (
-    <div className='text-richblack-5' >
+    <div className='text-richblack-25' >
 
       <button onClick={()=>setOpen(!open)} className='flex items-center'>
         <img src={user?.image} className='rounded-full w-[30px]'/>
@@ -33,7 +33,7 @@ const ProfileDropDown = () => {
 
       {
         open && (
-          <div className='absolute bg-richblack-800 translate-x-[-65px] translate-y-[5px] p-2 rounded-md z-10' ref={ref}>
+          <div className='absolute bg-richblack-600 translate-x-[-65px] translate-y-[5px] p-2 rounded-md z-10' ref={ref}>
           {/* React will put a reference to the DOM element into ref.current, which we can access through an event handler. */}
             <div className='flex flex-col gap-2'>
               <Link className='flex gap-[1px] items-center' to='/dashboard/my-profile' onClick={()=>setOpen(false)}>

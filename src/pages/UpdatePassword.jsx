@@ -43,11 +43,11 @@ const UpdatePassword = () => {
 
         <form onSubmit={handleSubmit}>
 
-            <label className='flex flex-col gap-2'>
+            <label className='flex flex-col gap-2 relative'>
                 <p>New password<sup className='text-pink-300'>*</sup></p>
                 <input type={showPassword ? 'text' : 'password'} required placeholder='Enter new password'  className='bg-richblack-800 p-4 rounded-md 
                 border-b-[1px] border-[#FFFFFF2E] focus:outline-none w-full mb-2' onChange={(e)=>setFormData({...formData, password:e.target.value})}/>
-                <div className='absolute translate-x-[425px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
+                <div className='absolute left-[93%] top-[53%] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
                     onClick={showPasswordHandler}>
                         {
                             showPassword ?  <IoMdEyeOff /> : <IoEye />
@@ -55,12 +55,12 @@ const UpdatePassword = () => {
                 </div> 
             </label>
 
-            <label className='flex flex-col gap-2'>
+            <label className='flex flex-col gap-2 relative'>
                 <p>Confirm New Password<sup className='text-pink-300'>*</sup></p>
                 <input type={showConfirmPassword ? 'text' : 'password'} required placeholder='Enter confirm new password' 
                 className='bg-richblack-800 p-4 rounded-md border-b-[1px] 
                 border-[#FFFFFF2E] focus:outline-none w-full mb-2' onChange={(e)=>setFormData({...formData, confirmPassword:e.target.value})}/>
-                <div className='absolute translate-x-[425px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
+                <div className='absolute left-[93%] top-[53%] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
                     onClick={showConfirmPasswordHandler}>
                         {
                             showConfirmPassword ?  <IoMdEyeOff /> : <IoEye />

@@ -58,7 +58,7 @@ export async function login (dispatch, navigate, formData){
 export async function sendOtp (navigate, email){
   const toastId = toast.loading('Loading...')
   try{
-    const response = await apiConnector('POST', SENDOTP_API, {email})
+    await apiConnector('POST', SENDOTP_API, {email})
     toast.dismiss(toastId)
     toast.success('OTP sent successfully')
     navigate('/verify-email')
@@ -74,7 +74,7 @@ export async function signup(navigate, formData){
   const toastId = toast.loading('Loading...')
 
   try{
-    const response = await apiConnector('POST', SIGNUP_API, {firstName, lastName, email, password, confirmPassword, accountType, contactNumber, otp})
+    await apiConnector('POST', SIGNUP_API, {firstName, lastName, email, password, confirmPassword, accountType, contactNumber, otp})
     toast.dismiss(toastId)
     toast.success('Signup Successful')
     navigate('/login')
@@ -89,7 +89,7 @@ export async function signup(navigate, formData){
 export async function resetPasswordToken(email, setOtpSent){
   const toastId = toast.loading('Loading...')
   try{
-    const response = await apiConnector('POST', RESETPASSTOKEN_API, {email})
+    await apiConnector('POST', RESETPASSTOKEN_API, {email})
     toast.dismiss(toastId)
     toast.success('Email sent successfully')
     setOtpSent(true)
@@ -102,7 +102,7 @@ export async function resetPasswordToken(email, setOtpSent){
 export async function updatePassword(formData, navigate){
   const toastId = toast.loading('Loading...')
   try{
-    const response = await apiConnector('POST', RESETPASSWORD_API, formData)
+    await apiConnector('POST', RESETPASSWORD_API, formData)
     toast.dismiss(toastId)
     toast.success('Password reset successful')
     navigate('/login')

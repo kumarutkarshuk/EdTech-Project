@@ -11,6 +11,8 @@ import OpenRoute from "./pages/OpenRoute";
 import VerifyEmail from "./pages/VerifyEmail";
 import UpdatePassword from "./pages/UpdatePassword";
 import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path='/verify-email' element={<VerifyEmail/>}></Route>
         <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
         <Route path='/update-password/:id' element={<UpdatePassword/>}></Route>
+        <Route path='/about' element={<About/>}></Route>
+        <Route path='/contact' element={<ContactUs/>}></Route>
 
       </Routes>
     </div>

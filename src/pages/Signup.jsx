@@ -145,13 +145,13 @@ const Signup = () => {
                         </div>
                         
                         <div className='flex justify-between gap-2'>
-                            <div className='flex flex-col gap-2 w-[50%]'>
+                            <div className='flex flex-col gap-2 w-[50%] relative'>
                                 <label htmlFor="password">Password<sup className='text-pink-300'>*</sup></label>
                                 <input type={showPassword ? 'text' : 'password'} placeholder='Enter password' className='bg-richblack-800 p-4 rounded-md
                                  border-b-[1px]
                                 border-[#FFFFFF2E] focus:outline-none' id='password' onChange={formDataHandler} required/>
         
-                                <div className='absolute translate-x-[245px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200'
+                                <div className='absolute left-[90%] top-[60%] scale-[1.25] hover:text-blue-100 transtion-all duration-200'
                                  onClick={showPasswordHandler}>
                                 {
                                     showPassword ?  <IoMdEyeOff /> : <IoEye />
@@ -159,12 +159,12 @@ const Signup = () => {
                                 </div>
                             </div>
         
-                            <div className='flex flex-col gap-2 w-[50%]'>
+                            <div className='flex flex-col gap-2 w-[50%] relative'>
                                 <label htmlFor="confirmPassword">Confirm Password<sup className='text-pink-300'>*</sup></label>
                                 <input type={showConfirmPassword ? 'text' : 'password'} placeholder='Enter confirm password' 
                                 className='bg-richblack-800 p-4 rounded-md border-b-[1px] 
                                 border-[#FFFFFF2E] focus:outline-none' id='confirmPassword' onChange={formDataHandler} required/>
-                                <div className='absolute translate-x-[245px] translate-y-[53px] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
+                                <div className='absolute left-[90%] top-[60%] scale-[1.25] hover:text-blue-100 transtion-all duration-200' 
                                 onClick={showConfirmPasswordHandler}>
                                 {
                                     showPassword ?  <IoMdEyeOff /> : <IoEye />

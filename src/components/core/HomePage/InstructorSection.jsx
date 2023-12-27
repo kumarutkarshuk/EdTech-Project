@@ -1,15 +1,15 @@
 import React from 'react'
 import image from '../../../assets/Images/Instructor.png'
-import HighlightText from './HighlightText'
+import HighlightText from '../../common/HighlightText'
 import { FaArrowRight } from "react-icons/fa";
-import CTAButton from './CTAButton';
+import CTAButton from '../../common/CTAButton';
 
 const InstructorSection = () => {
   return (
     <div className='w-11/12 mx-auto lg:m-16 flex items-center justify-around lg:flex-row flex-col'>
 
 
-        <div className='w-[40%] shadow-[-15px_-15px_0px_0px_white] hidden lg:block'>
+        <div className='w-[40%]  hidden lg:block'>
           <img src={image} className='relative z-10'/>
           
         </div>
@@ -19,7 +19,8 @@ const InstructorSection = () => {
             <p className='text-white'>Become an</p>
             <HighlightText text={'instructor'}></HighlightText>
           </div>
-          <p className='text-richblack-100 w-[85%]'>Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.</p>
+          <p className='text-richblack-100 w-[85%]'>Instructors from around the world teach millions of students on StudyNotion. 
+          We provide the tools and skills to teach what you love.</p>
           <div className='lg:hidden'>
             <img src={image} className='relative z-10'/>
           
