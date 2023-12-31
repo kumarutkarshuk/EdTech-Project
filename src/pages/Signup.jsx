@@ -2,7 +2,7 @@
 
 //required attribute is working that good but fine
 //onChange -> hence had to set a default value of country code
-//some more logic might be left including validation of data type of phone (same type of issue with localStorage)
+//some more logic might be left including validation of data type of phone (in dashboard also) (same type of issue with localStorage)
 //to path in link tag -> button
 //resend
 
@@ -39,7 +39,7 @@ const Signup = () => {
             email:"",
             password:"",
             contactNumber:"",
-            code:"India",
+            code:"India (+91)",
             confirmPassword:"",
             accountType:"Student",
             otp:""
@@ -73,7 +73,7 @@ const Signup = () => {
         
         dispatch(setSignupData(formData))
         sendOtp(navigate, formData.email)
-        // console.log("Form Data: ",formData)
+        console.log("Form Data: ",formData)
     }
 
 

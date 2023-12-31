@@ -32,7 +32,7 @@ const Navbar = () => {
     useEffect(() => {fetchSubLinks()}, [])
 
   return (
-    <div className='w-full border-b border-richblack-600'>
+    <div className={`w-full border-b border-richblack-600 ${location.pathname.includes('/dashboard') && 'bg-richblack-800'}`}>
         <div className='w-11/12 mx-auto flex items-center h-14 justify-between'>
 
             <Link to='/'>

@@ -174,7 +174,7 @@ exports.login = async (req, res) => {
             })
         }
         //no need of populate below
-        const user = await User.findOne({email})
+        const user = await User.findOne({email}).populate('additionalDetails')
         if(!user){
             return res.status(401).json({
                 success:false,
@@ -225,21 +225,27 @@ exports.login = async (req, res) => {
 //doubt: can object returned by mongoose function be used to make changes in the db? Ans -> no, it returns a copy
 exports.changePassword = async (req, res) => {
     try{
-        //get data of oldPassword, newPassword, confirmNewPassword from req body
-        const {oldPassword, newPassword, confirmNewPassword} = req.body
+        //get data of oldPassword, newPassword, confirmNewPassword from req body -> frontend will send only newPassword
+        const {oldPassword, newPassword} = req.body
         //validation -> I think old password should be validated as well -> done below
-        if(newPassword !== confirmNewPassword){
-            return res.json({
-                success:false,
-                message:`Passwords don't match`
-            })
-        }
+        // if(newPassword !== confirmNewPassword){
+        //     return res.json({
+        //         success:false,
+        //         message:`Passwords don't match`
+        //     })
+        // }
         const id = req.user.id
         const {password} = await User.findById({_id:id})
         //update in db -> how to find the user? -> found
         if(await bcrypt.compare(oldPassword, password)){
             const hashedPassword = await bcrypt.hash(newPassword, 10)
             await User.findOneAndUpdate({_id:id},{password: hashedPassword})
+        }
+        else{
+            return res.status(403).json({
+                success:false,
+                message:"Wrong password entered"
+            })
         }
         
         //send mail -> try catch block

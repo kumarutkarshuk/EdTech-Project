@@ -9,11 +9,14 @@ exports.updateProfile = async (req, res)=>{
     try{
 
         //similar to default parameter
-        const {dateOfBirth="", about="", contactNumber, gender} = req.body
+        // const {dateOfBirth="", about="", contactNumber, gender, firstName, lastName} = req.body
+
+        const {dateOfBirth, about, contactNumber, gender, firstName, lastName} = req.body
         const id = req.user.id
 
-        //no need of validating id ig
-        if(!contactNumber || !gender || !id){
+        //no need of validating id ig -> removed from the condition below
+        //
+        if(!contactNumber || !gender || !dateOfBirth || !about || !firstName || !lastName){
             return res.status(400).json({
                 success:false,
                 message:"All fields are mandatory"
@@ -32,20 +35,25 @@ exports.updateProfile = async (req, res)=>{
         profileDetails.gender = gender
         await profileDetails.save()
 
+        userDetails.firstName = firstName
+        userDetails.lastName = lastName
+        await userDetails.save()
+
+
         //confidential info should be hidden generally
         return res.status(200).json({
             success:true,
             message:"Profile updated successfully",
-            profileDetails
+            profileDetails,
+            userDetails
         })
 
     }catch(e){
+        console.log(e.message)
         return res.status(500).json({
             success:false,
             error:e.message,
             message:"Error updating the profile",
-            
-
         })
     }
 }
