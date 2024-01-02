@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import EditButton from '../Dashboard/EditButton'
+import EditButton from './EditButton'
 
 const MyProfile = () => {
 
@@ -44,7 +44,7 @@ const MyProfile = () => {
                     data.map((element, index) => (
                       <div className='flex flex-col'>
                         <p className='text-richblack-300'>{element.title}</p>
-                        <p >{element.value}</p>
+                        <p>{element.value}</p>
                       </div>
                     ))
                   }

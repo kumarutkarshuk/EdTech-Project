@@ -1,3 +1,5 @@
+//React.StrictMode causes rendering to happen twice
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -15,7 +17,7 @@ const store = configureStore({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <App />
@@ -23,5 +25,5 @@ root.render(
       </BrowserRouter>
     </Provider>
     
-  </React.StrictMode>
+  // </React.StrictMode>
 );

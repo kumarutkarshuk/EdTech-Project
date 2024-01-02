@@ -5,7 +5,7 @@ import countryCodes from '../../../../data/countrycode.json'
 import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 // import { useEffect } from 'react'
-import { updateProfile } from '../../../../services/operations/authAPI'
+import { updateProfile } from '../../../../services/operations/settingsAPI'
 import { useDispatch } from 'react-redux'
 
 const ProfileInfo = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaTrashAlt } from "react-icons/fa";
-import { deleteAccount } from '../../../../services/operations/authAPI';
+import { deleteAccount } from '../../../../services/operations/settingsAPI';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";

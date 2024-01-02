@@ -11,7 +11,7 @@ exports.updateProfile = async (req, res)=>{
         //similar to default parameter
         // const {dateOfBirth="", about="", contactNumber, gender, firstName, lastName} = req.body
 
-        const {dateOfBirth, about, contactNumber, gender, firstName, lastName} = req.body
+        const {dateOfBirth, about, contactNumber, gender, firstName, lastName, image} = req.body
         const id = req.user.id
 
         //no need of validating id ig -> removed from the condition below
@@ -23,7 +23,7 @@ exports.updateProfile = async (req, res)=>{
             })
         }
 
-        const userDetails = await User.findById(id)
+        let userDetails = await User.findById(id).populate('additionalDetails').exec()
         const profileId = userDetails.additionalDetails
         const profileDetails = await Profile.findById(profileId)
         
@@ -34,11 +34,14 @@ exports.updateProfile = async (req, res)=>{
         profileDetails.contactNumber = contactNumber
         profileDetails.gender = gender
         await profileDetails.save()
+        
+
 
         userDetails.firstName = firstName
         userDetails.lastName = lastName
+        userDetails.image = image
         await userDetails.save()
-
+        userDetails = await User.findById(id).populate('additionalDetails').exec()
 
         //confidential info should be hidden generally
         return res.status(200).json({
@@ -165,7 +168,15 @@ exports.getEnrolledCourses = async (req, res) => {
 
 
         const userId = req.user.id
-        const userDetails = await User.findById(userId).populate('courses').exec()
+        const userDetails = await User.findById(userId).populate({
+            path:"courses",
+            populate:{
+                path:"courseContent",
+                populate:{
+                    path:"subSection"
+                }
+            }
+        }).exec()
         if(!userDetails){
             return res.status(400).json({
                 success:false,

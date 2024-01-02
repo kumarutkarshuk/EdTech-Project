@@ -22,7 +22,8 @@ const Sidebar = () => {
                 const Icon = Icons[element.icon]
                 if(user?.accountType === element.type || element.type === undefined) return (
                     <Link key={element.id} className={`flex gap-2 items-center pl-6 py-[5px]
-                    ${matchPath({path: element.path}, location.pathname) ? 'text-yellow-25 bg-yellow-800 border-l-[3px] border-yellow-25 transition-all duration-200' 
+                    ${matchPath({path: element.path}, location.pathname) ? 
+                    'text-yellow-25 bg-yellow-800 border-l-[3px] border-yellow-25 transition-allduration-200' 
                     : ''}`}
                     to={element.path}>
                         <Icon></Icon>

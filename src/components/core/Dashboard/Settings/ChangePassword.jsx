@@ -4,7 +4,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import {useForm} from 'react-hook-form'
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { changePassword } from '../../../../services/operations/authAPI';
+import { changePassword } from '../../../../services/operations/settingsAPI';
 import { useSelector } from 'react-redux';
 
 const ChangePassword = () => {

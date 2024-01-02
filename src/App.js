@@ -1,4 +1,6 @@
 //authorization to verify email page -> open route will be partially correct
+//authorization to enrolled courses -> done -> no error because of optional chaining operator
+//conditional rendering can be with used to return only one element at a time
 
 import "./App.css";
 import {Route, Routes} from 'react-router-dom'
@@ -14,14 +16,18 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import ContactUs from "./pages/ContactUs";
 import Dashboard from "./pages/Dashboard";
-import MyProfile from "./components/core/Dashboard/MyProfile";
-import Settings from "./components/core/Dashboard/Settings";
+import MyProfile from "./components/core/Dashboard/MyProfile/MyProfile";
+import Settings from "./components/core/Dashboard/Settings/Settings";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { useSelector } from "react-redux";
 import LogoutModal from './components/common/Modal'
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart/Cart";
 
 function App() {
   const {logoutClicked} = useSelector((state)=>state.auth)
+  const {user} = useSelector((state)=>state.profile)
+
   return (
     <>
       {logoutClicked && <div className="w-screen h-screen fixed z-10 bg-richblack-800 opacity-90"></div>}
@@ -54,6 +60,18 @@ function App() {
           <Route path='/dashboard' element={<ProtectedRoute><Dashboard></Dashboard></ProtectedRoute>}>
             <Route path='my-profile' element={<MyProfile></MyProfile>}></Route>
             <Route path='settings' element={<Settings></Settings>}></Route>
+
+            {
+              user?.accountType === "Student" && (
+                <Route path='enrolled-courses' element={<EnrolledCourses></EnrolledCourses>}></Route>
+              )
+            }
+            {
+              user?.accountType === "Student" && (
+                <Route path='cart' element={<Cart></Cart>}></Route>
+              )
+            }
+            
           </Route>
 
         </Routes>

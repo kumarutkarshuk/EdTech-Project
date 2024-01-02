@@ -1,9 +1,9 @@
 
 import React from 'react'
-import ChangeProfilePic from './Forms/ChangeProfilePic';
-import ProfileInfo from './Forms/ProfileInfo';
-import ChangePassword from './Forms/ChangePassword';
-import DeleteAccount from './Forms/DeleteAccount';
+import ChangeProfilePic from './ChangeProfilePic';
+import ProfileInfo from './ProfileInfo';
+import ChangePassword from './ChangePassword';
+import DeleteAccount from './DeleteAccount';
 
 
 

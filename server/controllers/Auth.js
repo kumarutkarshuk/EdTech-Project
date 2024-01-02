@@ -174,7 +174,7 @@ exports.login = async (req, res) => {
             })
         }
         //no need of populate below
-        const user = await User.findOne({email}).populate('additionalDetails')
+        const user = await User.findOne({email}).populate('additionalDetails').exec()
         if(!user){
             return res.status(401).json({
                 success:false,
